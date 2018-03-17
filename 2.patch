@@ -1,0 +1,287 @@
+From 74de68e42c8c66425b5137eea0701029aadc3f77 Mon Sep 17 00:00:00 2001
+From: Ondrej Machulda <ondrej.machulda@lmc.eu>
+Date: Fri, 16 Mar 2018 23:07:40 +0100
+Subject: [PATCH 1/3] Require ECS
+
+---
+ .editorconfig | 17 +++++++++++++++++
+ composer.json |  7 +++++--
+ 2 files changed, 22 insertions(+), 2 deletions(-)
+ create mode 100644 .editorconfig
+
+diff --git a/.editorconfig b/.editorconfig
+new file mode 100644
+index 0000000..397f027
+--- /dev/null
++++ b/.editorconfig
+@@ -0,0 +1,17 @@
++# http://editorconfig.org
++
++root = true
++
++[*]
++charset = utf-8
++end_of_line = lf
++insert_final_newline = true
++trim_trailing_whitespace = true
++indent_style = space
++indent_size = 4
++
++[*.{js,json,ts,tsx}]
++indent_size = 4
++
++[*.md]
++trim_trailing_whitespace = false
+diff --git a/composer.json b/composer.json
+index e68947c..7aa2c17 100644
+--- a/composer.json
++++ b/composer.json
+@@ -3,12 +3,15 @@
+     "description": "Coding standard used in LMC projects",
+     "type": "library",
+     "license": "MIT",
+-    "minimum-stability": "stable",
++    "minimum-stability": "alpha",
++    "prefer-stable": true,
+     "authors": [
+         {
+             "name": "LMC s.r.o.",
+             "homepage": "https://github.com/lmc-eu"
+         }
+     ],
+-    "require": {}
++    "require": {
++        "symplify/easy-coding-standard": "4.0.x"
++    }
+ }
+
+From 03dbdbe91ed0bc643425eda5d67cfb9861ccc699 Mon Sep 17 00:00:00 2001
+From: Ondrej Machulda <ondrej.machulda@lmc.eu>
+Date: Fri, 16 Mar 2018 23:09:24 +0100
+Subject: [PATCH 2/3] Setup ECS according to currently used ruleset.xml for
+ PHP_CodeSniffer
+
+---
+ easy-coding-standard.yml | 106 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 106 insertions(+)
+ create mode 100644 easy-coding-standard.yml
+
+diff --git a/easy-coding-standard.yml b/easy-coding-standard.yml
+new file mode 100644
+index 0000000..f226c7d
+--- /dev/null
++++ b/easy-coding-standard.yml
+@@ -0,0 +1,106 @@
++imports:
++    - { resource: 'vendor/symplify/easy-coding-standard/config/psr2.yml' }
++
++services:
++    # Class and Interface names should be unique in a project, they should never be duplicated
++    PHP_CodeSniffer\Standards\Generic\Sniffs\Classes\DuplicateClassNameSniff:
++    # Incrementers in nested loops should use different variable names
++    PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\JumbledIncrementerSniff:
++    # Control Structures must have at least one statement inside of the body (empty catch rules is skipped)
++    PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff:
++    # Line length should not exceed 120 characters
++    PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff:
++        lineLimit: 120
++        absoluteLineLimit: 0
++    # Empty catch statements must have comment explaining why the exception is not handled
++    PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting\EmptyCatchCommentSniff:
++    # For loops that have only a second expression (the condition) should be converted to while loops
++    PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\ForLoopShouldBeWhileLoopSniff:
++    # If statements that are always evaluated should not be used
++    PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UnconditionalIfStatementSniff:
++    # Methods should not be declared final inside of classes that are declared final
++    PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UnnecessaryFinalModifierSniff:
++    # Methods should not be defined that only call the parent method
++    PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UselessOverridingMethodSniff:
++    # There should only be one class defined in a file
++    PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneClassPerFileSniff:
++    # There should only be one interface defined in a file
++    PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneInterfacePerFileSniff:
++    # There should only be one trait defined in a file
++    PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneTraitPerFileSniff:
++    # Exactly one space is allowed after a cast
++    PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceAfterCastSniff:
++    # Some functions should not appear in the code
++    PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff:
++        forbiddenFunctions:
++            var_dump: null
++            dump: null
++            echo: null
++            require: null
++            require_once: null
++            include: null
++            include_once: null
++            phpinfo: null
++            eval: null
++            sizeof: count
++            printf: null
++    # Bans the use of the PHP long array syntax.
++    PHP_CodeSniffer\Standards\Generic\Sniffs\Arrays\DisallowLongArraySyntaxSniff:
++    # When referencing arrays you should not put whitespace around the opening bracket or before the closing bracket
++    PHP_CodeSniffer\Standards\Squiz\Sniffs\Arrays\ArrayBracketSpacingSniff:
++    # Various array declaration rules (but some of the rules are skipped)
++    PHP_CodeSniffer\Standards\Squiz\Sniffs\Arrays\ArrayDeclarationSniff:
++    # The self keyword should be used instead of the current class name
++    PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\SelfMemberReferenceSniff:
++    # The asterisks in a doc comment should align, and there should be one space between the asterisk and tags
++    PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting\DocCommentAlignmentSniff:
++    # Doc comment formatting (but some of the rules are skipped)
++    PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\DocCommentSniff:
++    # Tests that the ++ operators are used when possible and not used when it makes the code confusing
++    PHP_CodeSniffer\Standards\Squiz\Sniffs\Operators\IncrementDecrementUsageSniff:
++    # Verifies that class members have scope modifiers
++    PHP_CodeSniffer\Standards\Squiz\Sniffs\Scope\MemberVarScopeSniff:
++    # Casts should not have whitespace inside the parentheses
++    PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\CastSpacingSniff:
++    # Semicolons should not have spaces before them
++    PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\SemicolonSpacingSniff:
++    # The php constructs like echo, return, include, etc. should have one space after them
++    PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff:
++    # The php keywords static, public, private, and protected should have one space after them
++    PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\ScopeKeywordSpacingSniff:
++    # Proper operator spacing
++    PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\OperatorSpacingSniff:
++        ignoreNewlines: true
++    # Verifies that operators have valid spacing surrounding them
++    PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LogicalOperatorSpacingSniff:
++
++parameters:
++    skip:
++        # Skip unwanted rules from ArrayDeclarationSniff
++        PHP_CodeSniffer\Standards\Squiz\Sniffs\Arrays\ArrayDeclarationSniff.ValueNotAligned: ~
++        PHP_CodeSniffer\Standards\Squiz\Sniffs\Arrays\ArrayDeclarationSniff.KeyNotAligned: ~
++        PHP_CodeSniffer\Standards\Squiz\Sniffs\Arrays\ArrayDeclarationSniff.CloseBraceNotAligned: ~
++        PHP_CodeSniffer\Standards\Squiz\Sniffs\Arrays\ArrayDeclarationSniff.DoubleArrowNotAligned: ~
++        PHP_CodeSniffer\Standards\Squiz\Sniffs\Arrays\ArrayDeclarationSniff.SingleLineNotAllowed: ~
++        PHP_CodeSniffer\Standards\Squiz\Sniffs\Arrays\ArrayDeclarationSniff.MultiLineNotAllowed: ~
++
++        # Skip unwanted rules from DocCommentSniff
++        PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\DocCommentSniff.ContentAfterOpen: ~
++        PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\DocCommentSniff.ContentBeforeClose: ~
++        PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\DocCommentSniff.MissingShort: ~
++        PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\DocCommentSniff.TagValueIndent: ~
++        PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\DocCommentSniff.NonParamGroup: ~
++        PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\DocCommentSniff.ParamGroup: ~
++        PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\DocCommentSniff.ParamNotFirst: ~
++
++        # We allow empty catch statements (but they must have comment - see EmptyCatchCommentSniff)
++        PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff.DetectedCatch: ~
++
++        # There could be more than one space after star (eg. in Doctrine annotations)
++        PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting\DocCommentAlignmentSniff.SpaceAfterStar: ~
++
++        # Skip non-PSR2 rules incorrectly added by ECS (https://github.com/Symplify/Symplify/issues/696)
++        PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\ControlStructureSpacingSniff.SpacingAfterOpenBrace: ~
++        PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\ControlStructureSpacingSniff.SpaceBeforeCloseBrace: ~
++        PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\ControlStructureSpacingSniff.LineAfterClose: ~
++        PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\ControlStructureSpacingSniff.NoLineAfterClose: ~
+
+From d4e1bf36729d2ea74a52c809b9e83f230c2a4d31 Mon Sep 17 00:00:00 2001
+From: Ondrej Machulda <ondrej.machulda@lmc.eu>
+Date: Fri, 16 Mar 2018 23:52:38 +0100
+Subject: [PATCH 3/3] Setup ECS according to currently used rules for
+ php-cs-fixer
+
+---
+ easy-coding-standard.yml | 85 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 85 insertions(+)
+
+diff --git a/easy-coding-standard.yml b/easy-coding-standard.yml
+index f226c7d..74f440a 100644
+--- a/easy-coding-standard.yml
++++ b/easy-coding-standard.yml
+@@ -2,6 +2,91 @@ imports:
+     - { resource: 'vendor/symplify/easy-coding-standard/config/psr2.yml' }
+ 
+ services:
++    PhpCsFixer\Fixer\ArrayNotation\ArraySyntaxFixer:
++        syntax: short
++    PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer: ~
++    PhpCsFixer\Fixer\Whitespace\BlankLineBeforeStatementFixer:
++        statements:
++            - return
++            - try
++    PhpCsFixer\Fixer\Basic\BracesFixer:
++        allow_single_line_closure: true
++    PhpCsFixer\Fixer\CastNotation\CastSpacesFixer: ~
++    PhpCsFixer\Fixer\Operator\ConcatSpaceFixer:
++        spacing: one
++    PhpCsFixer\Fixer\PhpTag\FullOpeningTagFixer: ~
++    PhpCsFixer\Fixer\FunctionNotation\FunctionTypehintSpaceFixer: ~
++    PhpCsFixer\Fixer\LanguageConstruct\IsNullFixer: ~
++    PhpCsFixer\Fixer\LanguageConstruct\IsNullFixer:
++        use_yoda_style: false
++    PhpCsFixer\Fixer\CastNotation\LowercaseCastFixer: ~
++    PhpCsFixer\Fixer\Alias\MbStrFunctionsFixer: ~
++    PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer:
++        elements:
++            - method
++    PhpCsFixer\Fixer\Casing\NativeFunctionCasingFixer: ~
++    PhpCsFixer\Fixer\Operator\NewWithBracesFixer: ~
++    PhpCsFixer\Fixer\Alias\NoAliasFunctionsFixer: ~
++    PhpCsFixer\Fixer\ClassNotation\NoBlankLinesAfterClassOpeningFixer: ~
++    PhpCsFixer\Fixer\Phpdoc\NoBlankLinesAfterPhpdocFixer: ~
++    PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer: ~
++    PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer: ~
++    PhpCsFixer\Fixer\Semicolon\NoEmptyStatementFixer: ~
++    PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer:
++        tokens:
++            - break
++            - continue
++            - curly_brace_block
++            - extra
++            - parenthesis_brace_block
++            - return
++            - square_brace_block
++            - throw
++            - use
++            - use_trait
++    PhpCsFixer\Fixer\Import\NoLeadingImportSlashFixer: ~
++    PhpCsFixer\Fixer\NamespaceNotation\NoLeadingNamespaceWhitespaceFixer: ~
++    PhpCsFixer\Fixer\Semicolon\NoSinglelineWhitespaceBeforeSemicolonsFixer: ~
++    PhpCsFixer\Fixer\ArrayNotation\NoTrailingCommaInSinglelineArrayFixer: ~
++    PhpCsFixer\Fixer\FunctionNotation\NoUnreachableDefaultArgumentValueFixer: ~
++    PhpCsFixer\Fixer\Import\NoUnusedImportsFixer:
++    PhpCsFixer\Fixer\ControlStructure\NoUselessElseFixer: ~
++    PhpCsFixer\Fixer\ReturnNotation\NoUselessReturnFixer: ~
++    PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer: ~
++    PhpCsFixer\Fixer\ArrayNotation\NormalizeIndexBraceFixer: ~
++    PhpCsFixer\Fixer\Operator\ObjectOperatorWithoutWhitespaceFixer: ~
++    PhpCsFixer\Fixer\Import\OrderedImportsFixer: ~
++    PhpCsFixer\Fixer\PhpUnit\PhpUnitConstructFixer: ~
++    PhpCsFixer\Fixer\PhpUnit\PhpUnitDedicateAssertFixer: ~
++    PhpCsFixer\Fixer\Phpdoc\PhpdocAddMissingParamAnnotationFixer: ~
++    PhpCsFixer\Fixer\Phpdoc\PhpdocIndentFixer: ~
++    PhpCsFixer\Fixer\Phpdoc\PhpdocNoAccessFixer: ~
++    PhpCsFixer\Fixer\Phpdoc\PhpdocNoEmptyReturnFixer: ~
++    PhpCsFixer\Fixer\Phpdoc\PhpdocNoPackageFixer: ~
++    PhpCsFixer\Fixer\Phpdoc\PhpdocOrderFixer: ~
++    PhpCsFixer\Fixer\Phpdoc\PhpdocReturnSelfReferenceFixer: ~
++    PhpCsFixer\Fixer\Phpdoc\PhpdocScalarFixer: ~
++    PhpCsFixer\Fixer\Phpdoc\PhpdocSingleLineVarSpacingFixer: ~
++    PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer: ~
++    PhpCsFixer\Fixer\Phpdoc\PhpdocTypesFixer: ~
++    PhpCsFixer\Fixer\Basic\Psr4Fixer: ~
++    PhpCsFixer\Fixer\ClassNotation\SelfAccessorFixer: ~
++    PhpCsFixer\Fixer\CastNotation\ShortScalarCastFixer: ~
++    PhpCsFixer\Fixer\NamespaceNotation\SingleBlankLineBeforeNamespaceFixer: ~
++    PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer: ~
++    PhpCsFixer\Fixer\Semicolon\SpaceAfterSemicolonFixer: ~
++    PhpCsFixer\Fixer\Operator\StandardizeNotEqualsFixer: ~
++    PhpCsFixer\Fixer\Operator\TernaryOperatorSpacesFixer: ~
++    PhpCsFixer\Fixer\ArrayNotation\TrailingCommaInMultilineArrayFixer: ~
++    PhpCsFixer\Fixer\ArrayNotation\TrimArraySpacesFixer: ~
++    PhpCsFixer\Fixer\Operator\UnaryOperatorSpacesFixer: ~
++    PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer: ~
++    PhpCsFixer\Fixer\ArrayNotation\WhitespaceAfterCommaInArrayFixer: ~
++    PhpCsFixer\Fixer\ControlStructure\YodaStyleFixer:
++        equal: false
++        identical: false
++        less_and_greater: false
++
+     # Class and Interface names should be unique in a project, they should never be duplicated
+     PHP_CodeSniffer\Standards\Generic\Sniffs\Classes\DuplicateClassNameSniff:
+     # Incrementers in nested loops should use different variable names
