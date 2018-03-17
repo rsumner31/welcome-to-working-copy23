@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en-US" prefix="og: http://ogp.me/ns#">
+<head>
+<meta charset="UTF-8">
+<title>Installing NVIDIA Drivers on RHEL or CentOS 7 - Advanced Clustering Technologies</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
+
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oswald:300,400,700" rel="stylesheet"> 
+
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+ fbq('init', '1790348934597846'); 
+fbq('track', 'PageView');
+</script>
+<noscript>
+ <img height="1" width="1" 
+src="https://www.facebook.com/tr?id=1790348934597846&ev=PageView
+&noscript=1"/>
+</noscript>
+<!-- End Facebook Pixel Code -->
+
+
+<!-- This site is optimized with the Yoast SEO plugin v5.4 - https://yoast.com/wordpress/plugins/seo/ -->
+<link rel="canonical" href="http://www.advancedclustering.com/act_kb/installing-nvidia-drivers-rhel-centos-7/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Installing NVIDIA Drivers on RHEL or CentOS 7 - Advanced Clustering Technologies" />
+<meta property="og:description" content="Most users of NVIDIA graphics cards prefer to use the drivers provided by NVIDIA. These more fully support the capabilities of the card when compared to the nouveau driver that is included with the distribution. These are the steps to install the NVIDIA driver and disable the nouveau driver. Prepare your machine yum -y update yum &hellip;" />
+<meta property="og:url" content="http://www.advancedclustering.com/act_kb/installing-nvidia-drivers-rhel-centos-7/" />
+<meta property="og:site_name" content="Advanced Clustering Technologies" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="Most users of NVIDIA graphics cards prefer to use the drivers provided by NVIDIA. These more fully support the capabilities of the card when compared to the nouveau driver that is included with the distribution. These are the steps to install the NVIDIA driver and disable the nouveau driver. Prepare your machine yum -y update yum [&hellip;]" />
+<meta name="twitter:title" content="Installing NVIDIA Drivers on RHEL or CentOS 7 - Advanced Clustering Technologies" />
+<script type='application/ld+json'>{"@context":"http:\/\/schema.org","@type":"WebSite","@id":"#website","url":"http:\/\/www.advancedclustering.com\/","name":"Advanced Clustering Technologies","alternateName":"Advanced Clustering","potentialAction":{"@type":"SearchAction","target":"http:\/\/www.advancedclustering.com\/?s={search_term_string}","query-input":"required name=search_term_string"}}</script>
+<script type='application/ld+json'>{"@context":"http:\/\/schema.org","@type":"Organization","url":"http:\/\/www.advancedclustering.com\/act_kb\/installing-nvidia-drivers-rhel-centos-7\/","sameAs":[],"@id":"#organization","name":"Advanced Clustering Technologies","logo":"https:\/\/www-devel.corp.advancedclustering.com\/wordpress\/wp-content\/uploads\/2017\/01\/logo.png"}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//maps.googleapis.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/www.advancedclustering.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.8.5"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b!==c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='eae-css-css'  href='http://www.advancedclustering.com/wp-content/plugins/addon-elements-for-elementor-page-builder/assets/css/eae.css?ver=4.8.5' type='text/css' media='all' />
+<link rel='stylesheet' id='bwg_frontend-css'  href='http://www.advancedclustering.com/wp-content/plugins/photo-gallery/css/bwg_frontend.css?ver=2.3.29' type='text/css' media='all' />
+<link rel='stylesheet' id='bwg_font-awesome-css'  href='http://www.advancedclustering.com/wp-content/plugins/photo-gallery/css/font-awesome/font-awesome.css?ver=4.6.3' type='text/css' media='all' />
+<link rel='stylesheet' id='bwg_mCustomScrollbar-css'  href='http://www.advancedclustering.com/wp-content/plugins/photo-gallery/css/jquery.mCustomScrollbar.css?ver=2.3.29' type='text/css' media='all' />
+<link rel='stylesheet' id='bwg_sumoselect-css'  href='http://www.advancedclustering.com/wp-content/plugins/photo-gallery/css/sumoselect.css?ver=3.0.2' type='text/css' media='all' />
+<link rel='stylesheet' id='ubermenu-open-sans-css'  href='//fonts.googleapis.com/css?family=Open+Sans%3A%2C300%2C400%2C700&#038;ver=4.8.5' type='text/css' media='all' />
+<link rel='stylesheet' id='act-style-css'  href='http://www.advancedclustering.com/wp-content/themes/act/style.css?ver=4.8.5' type='text/css' media='all' />
+<link rel='stylesheet' id='jquery-bxslider-css'  href='http://www.advancedclustering.com/wp-content/themes/act/css/jquery.bxslider.css?ver=4.8.5' type='text/css' media='all' />
+<link rel='stylesheet' id='owl-carousel-css'  href='http://www.advancedclustering.com/wp-content/themes/act/css/owl.carousel.css?ver=4.8.5' type='text/css' media='all' />
+<link rel='stylesheet' id='responsive-tabs-css'  href='http://www.advancedclustering.com/wp-content/themes/act/css/responsive-tabs.css?ver=4.8.5' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='http://www.advancedclustering.com/wp-content/themes/act/css/genericons.css?ver=4.8.5' type='text/css' media='all' />
+<link rel='stylesheet' id='ubermenu-css'  href='http://www.advancedclustering.com/wp-content/plugins/ubermenu/pro/assets/css/ubermenu.min.css?ver=3.2.5' type='text/css' media='all' />
+<link rel='stylesheet' id='ubermenu-trans-black-css'  href='http://www.advancedclustering.com/wp-content/plugins/ubermenu/pro/assets/css/skins/trans_black.css?ver=4.8.5' type='text/css' media='all' />
+<link rel='stylesheet' id='ubermenu-font-awesome-css'  href='http://www.advancedclustering.com/wp-content/plugins/ubermenu/assets/css/fontawesome/css/font-awesome.min.css?ver=4.3' type='text/css' media='all' />
+<link rel='stylesheet' id='elementor-tables-css'  href='http://www.advancedclustering.com/wp-content/plugins/tables-for-elementor/assets/css/frontend.min.css?ver=1.0.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/plugins/photo-gallery/js/bwg_frontend.js?ver=2.3.29'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var bwg_objectsL10n = {"bwg_select_tag":"Select Tag","bwg_search":"Search"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/plugins/photo-gallery/js/jquery.sumoselect.min.js?ver=3.0.2'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/plugins/photo-gallery/js/jquery.mobile.js?ver=2.3.29'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/plugins/photo-gallery/js/jquery.mCustomScrollbar.concat.min.js?ver=2.3.29'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/plugins/photo-gallery/js/jquery.fullscreen-0.4.1.js?ver=0.4.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var bwg_objectL10n = {"bwg_field_required":"field is required.","bwg_mail_validation":"This is not a valid email address.","bwg_search_result":"There are no images matching your search."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/plugins/photo-gallery/js/bwg_gallery_box.js?ver=2.3.29'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/plugins/photo-gallery/js/jquery.raty.js?ver=2.5.2'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/plugins/photo-gallery/js/jquery.featureCarousel.js?ver=2.3.29'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/plugins/photo-gallery/js/3DEngine/3DEngine.js?ver=1.0.0'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/plugins/photo-gallery/js/3DEngine/Sphere.js?ver=1.0.0'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/plugins/popup-builder-gold/javascript/sg_popup_core.js?ver=1'></script>
+<link rel='https://api.w.org/' href='http://www.advancedclustering.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.advancedclustering.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.advancedclustering.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.8.5" />
+<link rel='shortlink' href='http://www.advancedclustering.com/?p=1882' />
+<link rel="alternate" type="application/json+oembed" href="http://www.advancedclustering.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.advancedclustering.com%2Fact_kb%2Finstalling-nvidia-drivers-rhel-centos-7%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.advancedclustering.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.advancedclustering.com%2Fact_kb%2Finstalling-nvidia-drivers-rhel-centos-7%2F&#038;format=xml" />
+<script type='text/javascript'>SG_POPUPS_QUEUE = [];SG_POPUP_DATA = [];SG_APP_POPUP_URL = 'http://www.advancedclustering.com/wp-content/plugins/popup-builder-gold';SG_POPUP_VERSION='3.21_3;'</script><script type="text/javascript">
+		SG_POPUPS_QUEUE = ["1"]</script><style id="ubermenu-custom-generated-css">
+/** UberMenu Custom Menu Styles (Customizer) **/
+/* main */
+.ubermenu.ubermenu-main { background:none; border:none; box-shadow:none; }
+.ubermenu.ubermenu-main .ubermenu-item-level-0 > .ubermenu-target { border:none; box-shadow:none; }
+.ubermenu.ubermenu-main.ubermenu-horizontal .ubermenu-submenu-drop.ubermenu-submenu-align-left_edge_bar, .ubermenu.ubermenu-main.ubermenu-horizontal .ubermenu-submenu-drop.ubermenu-submenu-align-full_width { left:0; }
+.ubermenu.ubermenu-main.ubermenu-horizontal .ubermenu-item-level-0.ubermenu-active > .ubermenu-submenu-drop, .ubermenu.ubermenu-main.ubermenu-horizontal:not(.ubermenu-transition-shift) .ubermenu-item-level-0 > .ubermenu-submenu-drop { margin-top:0; }
+.ubermenu-main .ubermenu-item-level-0 > .ubermenu-target { font-size:16px; text-transform:uppercase; color:#000000; }
+.ubermenu.ubermenu-main .ubermenu-item-level-0:hover > .ubermenu-target, .ubermenu-main .ubermenu-item-level-0.ubermenu-active > .ubermenu-target { color:#ffffff; background:#d72f32; }
+.ubermenu-main .ubermenu-item-level-0.ubermenu-current-menu-item > .ubermenu-target, .ubermenu-main .ubermenu-item-level-0.ubermenu-current-menu-parent > .ubermenu-target, .ubermenu-main .ubermenu-item-level-0.ubermenu-current-menu-ancestor > .ubermenu-target { color:#d72f32; }
+.ubermenu-main .ubermenu-submenu.ubermenu-submenu-drop { background-color:#ffffff; border-color:#d72f32; color:#000000; }
+.ubermenu-main .ubermenu-item-level-0 > .ubermenu-submenu-drop { box-shadow:none; }
+.ubermenu-main .ubermenu-submenu .ubermenu-highlight { color:#d72f32; }
+.ubermenu-main .ubermenu-submenu .ubermenu-item-header > .ubermenu-target, .ubermenu-main .ubermenu-tab > .ubermenu-target { font-size:16px; }
+.ubermenu-main .ubermenu-submenu .ubermenu-item-header > .ubermenu-target { color:#000000; }
+.ubermenu-main .ubermenu-submenu .ubermenu-item-header > .ubermenu-target:hover { color:#d72f32; }
+.ubermenu-main .ubermenu-nav .ubermenu-submenu .ubermenu-item-header > .ubermenu-target { font-weight:normal; }
+.ubermenu-main .ubermenu-item-normal > .ubermenu-target { color:#000000; font-size:14px; }
+.ubermenu.ubermenu-main .ubermenu-item-normal > .ubermenu-target:hover, .ubermenu.ubermenu-main .ubermenu-item-normal:hover > .ubermenu-target, .ubermenu.ubermenu-main .ubermenu-item-normal.ubermenu-active > .ubermenu-target { color:#ffffff; }
+.ubermenu-main .ubermenu-item-normal.ubermenu-current-menu-item > .ubermenu-target { color:#d72f32; }
+.ubermenu.ubermenu-main .ubermenu-item-normal > .ubermenu-target:hover, .ubermenu.ubermenu-main .ubermenu-item-normal.ubermenu-active > .ubermenu-target { background-color:#d72f32; }
+.ubermenu-main .ubermenu-item-level-0.ubermenu-has-submenu-drop > .ubermenu-target:after { color:#d72f32; }
+.ubermenu-main .ubermenu-submenu .ubermenu-divider > hr { border-top-color:#d72f32; }
+.ubermenu-main, .ubermenu-main .ubermenu-target, .ubermenu-main .ubermenu-nav .ubermenu-item-level-0 .ubermenu-target, .ubermenu-main div, .ubermenu-main p, .ubermenu-main input { font-family:'Open Sans', sans-serif; font-weight:400; }
+
+
+/* Status: Loaded from Transient */
+
+</style><link rel="icon" href="http://www.advancedclustering.com/wp-content/uploads/2017/02/advancedclusteringtechnologies-150x150.png" sizes="32x32" />
+<link rel="icon" href="http://www.advancedclustering.com/wp-content/uploads/2017/02/advancedclusteringtechnologies.png" sizes="192x192" />
+<link rel="apple-touch-icon-precomposed" href="http://www.advancedclustering.com/wp-content/uploads/2017/02/advancedclusteringtechnologies.png" />
+<meta name="msapplication-TileImage" content="http://www.advancedclustering.com/wp-content/uploads/2017/02/advancedclusteringtechnologies.png" />
+
+</head>
+<body class="act_kb-template-default single single-act_kb postid-1882 elementor-default">
+<div class="wrapper">
+  <header id="header" class="site-header">
+    <div class="header-top clear">
+      <div class="header-top-left">
+	<p>Advanced Clustering Technologies is a leading provider of HPC clusters, servers and workstations.</p>
+      </div>
+      <div class="header-top-right">
+	<a href="callto:866-802-8222" class="call">Call Us Now 866-802-8222</a>
+	<a href="http://www.advancedclustering.com/request-quote/" class="mail">Request an HPC quote</a>
+      </div>
+    </div>
+    <div class="header-bottom clear">
+      <div class="wrap clear">
+	<a class="logo" href="/" title="Advanced Clustering"><img src="http://www.advancedclustering.com/wp-content/themes/act/images/logo.png" alt="ADVANCE CLUSTERING"/></a>
+	<div class="menubar-cart">
+		<a href="/system-quote-cart">
+		<img src='http://www.advancedclustering.com/wp-content/themes/act/images/cart-small.png' width=25 height=25>
+		Cart 		</a>
+	</div> 
+	  <div id="navbar" class="navbar">
+	    <nav id="site-navigation" class="navigation main-navigation" role="navigation">
+	      <button class="menu-toggle">Menu</button>
+	      <a class="screen-reader-text skip-link" href="#content" title="Skip to content">Skip to content</a>
+		
+<!-- UberMenu [Configuration:main] [Theme Loc:primary] [Integration:auto] -->
+<a class="ubermenu-responsive-toggle ubermenu-responsive-toggle-main ubermenu-skin-trans-black ubermenu-loc-primary ubermenu-responsive-toggle-content-align-left ubermenu-responsive-toggle-align-full " data-ubermenu-target="ubermenu-main-4-primary"><i class="fa fa-bars"></i>Menu</a><nav id="ubermenu-main-4-primary" class="ubermenu ubermenu-nojs ubermenu-main ubermenu-menu-4 ubermenu-loc-primary ubermenu-responsive ubermenu-responsive-default ubermenu-responsive-collapse ubermenu-horizontal ubermenu-transition-slide ubermenu-trigger-hover_intent ubermenu-skin-trans-black  ubermenu-bar-align-full ubermenu-items-align-left ubermenu-bound ubermenu-sub-indicators ubermenu-retractors-responsive"><ul id="ubermenu-nav-main-4-primary" class="ubermenu-nav"><li id="menu-item-53" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-has-children ubermenu-item-53 ubermenu-item-level-0 ubermenu-column ubermenu-column-auto ubermenu-has-submenu-drop ubermenu-has-submenu-flyout" ><span class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" tabindex="0"><span class="ubermenu-target-title ubermenu-target-text">Company</span></span><ul class="ubermenu-submenu ubermenu-submenu-id-53 ubermenu-submenu-type-flyout ubermenu-submenu-drop ubermenu-submenu-align-left_edge_item" ><li id="menu-item-644" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-644 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-1" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/company-overview/"><span class="ubermenu-target-title ubermenu-target-text">Company Overview</span></a></li><li id="menu-item-284" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-284 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-1" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/company-overview/contact-us/"><span class="ubermenu-target-title ubermenu-target-text">Contact Us</span></a></li><li id="menu-item-415" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-415 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-1" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/company-overview/our-customers/"><span class="ubermenu-target-title ubermenu-target-text">Our Customers</span></a></li><li id="menu-item-341" class="ubermenu-item ubermenu-item-type-post_type_archive ubermenu-item-object-act_success_stories ubermenu-item-341 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-1" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/act_success_stories/"><span class="ubermenu-target-title ubermenu-target-text">Success Stories</span></a></li><li id="menu-item-411" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-411 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-1" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/company-overview/careers/"><span class="ubermenu-target-title ubermenu-target-text">Careers</span></a></li><li id="menu-item-1936" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-1936 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-1" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/company-overview/events/"><span class="ubermenu-target-title ubermenu-target-text">Events</span></a></li><li id="menu-item-409" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-409 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-1" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/company-overview/purchasing-options/"><span class="ubermenu-target-title ubermenu-target-text">Purchasing Options</span></a></li><li class="ubermenu-retractor ubermenu-retractor-mobile"><i class="fa fa-times"></i> Close</li></ul></li><li id="menu-item-66" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-has-children ubermenu-item-66 ubermenu-item-level-0 ubermenu-column ubermenu-column-auto ubermenu-has-submenu-drop ubermenu-has-submenu-mega" ><span class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" tabindex="0"><span class="ubermenu-target-title ubermenu-target-text">Products</span></span><ul class="ubermenu-submenu ubermenu-submenu-id-66 ubermenu-submenu-type-mega ubermenu-submenu-drop ubermenu-submenu-align-full_width ubermenu-autoclear" ><li class="  ubermenu-item ubermenu-item-type-custom ubermenu-item-object-ubermenu-custom ubermenu-item-has-children ubermenu-item-651 ubermenu-item-level-1 ubermenu-column ubermenu-column-1-3 ubermenu-has-submenu-stack ubermenu-item-type-column ubermenu-column-id-651"><ul class="ubermenu-submenu ubermenu-submenu-id-651 ubermenu-submenu-type-stack" ><li id="menu-item-652" class="ubermenu-item ubermenu-item-type-custom ubermenu-item-object-ubermenu-custom ubermenu-item-652 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-2 ubermenu-column ubermenu-column-auto" ><div class="ubermenu-content-block ubermenu-custom-content ubermenu-custom-content-padded"><span class='menu-header'>Hardware</span></div></li><li class="ubermenu-divider"><hr/></li><li id="menu-item-630" class="ubermenu-item ubermenu-item-type-post_type_archive ubermenu-item-object-act_systems ubermenu-item-630 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-2 ubermenu-column ubermenu-column-auto" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/act_systems/"><span class="ubermenu-target-title ubermenu-target-text">All systems</span></a></li><li id="menu-item-1278" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-1278 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-2 ubermenu-column ubermenu-column-auto" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/products/hpc-clusters/"><span class="ubermenu-target-title ubermenu-target-text">HPC Clusters</span></a></li><li id="menu-item-700" class="ubermenu-item ubermenu-item-type-custom ubermenu-item-object-custom ubermenu-item-700 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-2 ubermenu-column ubermenu-column-auto" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="/act_systems?page=actblade"><span class="ubermenu-target-title ubermenu-target-text">ACTblade Systems</span></a></li><li id="menu-item-2694" class="ubermenu-item ubermenu-item-type-custom ubermenu-item-object-custom ubermenu-item-2694 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-2 ubermenu-column ubermenu-column-auto" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/act_systems/?page=computeblock"><span class="ubermenu-target-title ubermenu-target-text">HPC Compute Blocks</span></a></li><li id="menu-item-697" class="ubermenu-item ubermenu-item-type-custom ubermenu-item-object-custom ubermenu-item-697 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-2 ubermenu-column ubermenu-column-auto" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="/act_systems?page=server"><span class="ubermenu-target-title ubermenu-target-text">Servers</span></a></li><li id="menu-item-1481" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-1481 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-2 ubermenu-column ubermenu-column-auto" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/technologies/gpu-computing/"><span class="ubermenu-target-title ubermenu-target-text">GPU Systems</span></a></li><li id="menu-item-1603" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-1603 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-2 ubermenu-column ubermenu-column-auto" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/technologies/xeon-phi/"><span class="ubermenu-target-title ubermenu-target-text">Xeon Phi Systems</span></a></li><li id="menu-item-698" class="ubermenu-item ubermenu-item-type-custom ubermenu-item-object-custom ubermenu-item-698 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-2 ubermenu-column ubermenu-column-auto" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="/act_systems?page=desktop"><span class="ubermenu-target-title ubermenu-target-text">Workstations</span></a></li><li id="menu-item-1080" class="ubermenu-item ubermenu-item-type-custom ubermenu-item-object-custom ubermenu-item-1080 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-2 ubermenu-column ubermenu-column-auto" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="/act_systems?page=storage"><span class="ubermenu-target-title ubermenu-target-text">Storage</span></a></li></ul></li><li class="  ubermenu-item ubermenu-item-type-custom ubermenu-item-object-ubermenu-custom ubermenu-item-has-children ubermenu-item-645 ubermenu-item-level-1 ubermenu-column ubermenu-column-1-3 ubermenu-has-submenu-stack ubermenu-item-type-column ubermenu-column-id-645"><ul class="ubermenu-submenu ubermenu-submenu-id-645 ubermenu-submenu-type-stack" ><li id="menu-item-647" class="ubermenu-item ubermenu-item-type-custom ubermenu-item-object-ubermenu-custom ubermenu-item-647 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-2 ubermenu-column ubermenu-column-auto" ><div class="ubermenu-content-block ubermenu-custom-content ubermenu-custom-content-padded"><span class='menu-header'>Software</span></div></li><li class="ubermenu-divider"><hr/></li><li id="menu-item-407" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-407 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-2 ubermenu-column ubermenu-column-auto" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/products/software/equeue/"><span class="ubermenu-target-title ubermenu-target-text">eQUEUE</span><span class="ubermenu-target-divider"> – </span><span class="ubermenu-target-description ubermenu-target-text">Our innovative web-based job submission tool</span></a></li><li id="menu-item-408" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-408 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-2 ubermenu-column ubermenu-column-auto" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/products/software/act-utils-cluster-management/"><span class="ubermenu-target-title ubermenu-target-text">Act Utils</span><span class="ubermenu-target-divider"> – </span><span class="ubermenu-target-description ubermenu-target-text">Full featured cluster management software</span></a></li><li id="menu-item-446" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-446 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-2 ubermenu-column ubermenu-column-auto" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/products/software/breakin/"><span class="ubermenu-target-title ubermenu-target-text">Breakin</span><span class="ubermenu-target-divider"> – </span><span class="ubermenu-target-description ubermenu-target-text">Open-source hardware testing and diagnostics</span></a></li></ul></li><li class="  ubermenu-item ubermenu-item-type-custom ubermenu-item-object-ubermenu-custom ubermenu-item-has-children ubermenu-item-657 ubermenu-item-level-1 ubermenu-column ubermenu-column-1-3 ubermenu-has-submenu-stack ubermenu-item-type-column ubermenu-column-id-657"><ul class="ubermenu-submenu ubermenu-submenu-id-657 ubermenu-submenu-type-stack" ><li id="menu-item-658" class="ubermenu-item ubermenu-item-type-custom ubermenu-item-object-ubermenu-custom ubermenu-item-658 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-2 ubermenu-column ubermenu-column-auto" ><div class="ubermenu-content-block ubermenu-custom-content ubermenu-custom-content-padded"><span class='menu-header'>Services</span></div></li><li class="ubermenu-divider"><hr/></li><li id="menu-item-666" class="ubermenu-item ubermenu-item-type-custom ubermenu-item-object-custom ubermenu-item-666 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-2 ubermenu-column ubermenu-column-auto" ><a class="ubermenu-target ubermenu-target-with-image ubermenu-item-layout-image_above" href="http://www.actnowhpc.com"><img class="ubermenu-image ubermenu-image-size-full" src="http://www.advancedclustering.com/wp-content/uploads/2017/01/actnowhpc.png" srcset="http://www.advancedclustering.com/wp-content/uploads/2017/01/actnowhpc.png 864w, http://www.advancedclustering.com/wp-content/uploads/2017/01/actnowhpc-300x150.png 300w, http://www.advancedclustering.com/wp-content/uploads/2017/01/actnowhpc-768x384.png 768w" sizes="(max-width: 864px) 100vw, 864px" width="864" height="432" alt="ACTnowHPC cloud supercomputing"  /><span class="ubermenu-target-title ubermenu-target-text">ACTnowHPC</span><span class="ubermenu-target-divider"> – </span><span class="ubermenu-target-description ubermenu-target-text">On demand HPC cloud computing</span></a></li><li id="menu-item-447" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-447 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-2 ubermenu-column ubermenu-column-auto" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/products/services/"><span class="ubermenu-target-title ubermenu-target-text">Additional Services</span></a></li></ul></li><li class="ubermenu-retractor ubermenu-retractor-mobile"><i class="fa fa-times"></i> Close</li></ul></li><li id="menu-item-67" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-has-children ubermenu-item-67 ubermenu-item-level-0 ubermenu-column ubermenu-column-auto ubermenu-has-submenu-drop ubermenu-has-submenu-mega" ><span class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" tabindex="0"><span class="ubermenu-target-title ubermenu-target-text">Tech</span></span><ul class="ubermenu-submenu ubermenu-submenu-id-67 ubermenu-submenu-type-mega ubermenu-submenu-drop ubermenu-submenu-align-full_width ubermenu-submenu-content-align-center ubermenu-autoclear" ><li id="menu-item-2436" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-2436 ubermenu-item-auto ubermenu-item-header ubermenu-item-level-1 ubermenu-column ubermenu-column-1-5" ><a class="ubermenu-target ubermenu-target-with-image ubermenu-item-layout-image_above" href="http://www.advancedclustering.com/technologies/skylake/"><img class="ubermenu-image ubermenu-image-size-full" src="http://www.advancedclustering.com/wp-content/uploads/2017/05/badge-intel-xeon-platinum.png" width="100" height="100" alt="Intel Xeon Platinum Inside"  /><span class="ubermenu-target-title ubermenu-target-text">Intel Xeon SP &#8211; Skylake</span></a></li><li id="menu-item-865" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-865 ubermenu-item-auto ubermenu-item-header ubermenu-item-level-1 ubermenu-column ubermenu-column-1-5" ><a class="ubermenu-target ubermenu-target-with-image ubermenu-item-layout-image_above" href="http://www.advancedclustering.com/technologies/xeon-phi/"><img class="ubermenu-image ubermenu-image-size-full" src="http://www.advancedclustering.com/wp-content/uploads/2017/01/badge-xeon-phi-100px.png" width="100" height="100" alt="badge-xeon-phi-100px"  /><span class="ubermenu-target-title ubermenu-target-text">Xeon Phi &#8211; Knights Landing</span></a></li><li id="menu-item-2318" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-2318 ubermenu-item-auto ubermenu-item-header ubermenu-item-level-1 ubermenu-column ubermenu-column-1-5" ><a class="ubermenu-target ubermenu-target-with-image ubermenu-item-layout-image_above" href="http://www.advancedclustering.com/technologies/amd-epyc/"><img class="ubermenu-image ubermenu-image-size-full" src="http://www.advancedclustering.com/wp-content/uploads/2017/06/AMD-EPYC-badge.png" width="100" height="100" alt="AMD-EPYC-badge"  /><span class="ubermenu-target-title ubermenu-target-text">AMD EPYC Processors</span></a></li><li id="menu-item-887" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-887 ubermenu-item-auto ubermenu-item-header ubermenu-item-level-1 ubermenu-column ubermenu-column-1-5" ><a class="ubermenu-target ubermenu-target-with-image ubermenu-item-layout-image_above" href="http://www.advancedclustering.com/technologies/gpu-computing/"><img class="ubermenu-image ubermenu-image-size-full" src="http://www.advancedclustering.com/wp-content/uploads/2017/01/NVLogo-100px.png" width="100" height="100" alt="NVLogo-100px"  /><span class="ubermenu-target-title ubermenu-target-text">GPU Computing Systems</span></a></li><li id="menu-item-921" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-921 ubermenu-item-auto ubermenu-item-header ubermenu-item-level-1 ubermenu-column ubermenu-column-1-5" ><a class="ubermenu-target ubermenu-target-with-image ubermenu-item-layout-image_above" href="http://www.advancedclustering.com/technologies/infiniband/"><img class="ubermenu-image ubermenu-image-size-full" src="http://www.advancedclustering.com/wp-content/uploads/2017/01/InfiniBand_logo-100px.png" width="100" height="100" alt="InfiniBand_logo-100px"  /><span class="ubermenu-target-title ubermenu-target-text">Infiniband</span></a></li><li class="ubermenu-retractor ubermenu-retractor-mobile"><i class="fa fa-times"></i> Close</li></ul></li><li id="menu-item-68" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-has-children ubermenu-item-68 ubermenu-item-level-0 ubermenu-column ubermenu-column-auto ubermenu-has-submenu-drop ubermenu-has-submenu-flyout" ><span class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" tabindex="0"><span class="ubermenu-target-title ubermenu-target-text">Support</span></span><ul class="ubermenu-submenu ubermenu-submenu-id-68 ubermenu-submenu-type-flyout ubermenu-submenu-drop ubermenu-submenu-align-left_edge_item" ><li id="menu-item-807" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-807 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-1" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/support/ticket/"><span class="ubermenu-target-title ubermenu-target-text">Support Request</span></a></li><li id="menu-item-459" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-459 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-1" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/support/warranty/"><span class="ubermenu-target-title ubermenu-target-text">Warranty</span></a></li><li id="menu-item-1862" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-1862 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-1" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/support/serving-international-customers/"><span class="ubermenu-target-title ubermenu-target-text">International Customers</span></a></li><li id="menu-item-1091" class="ubermenu-item ubermenu-item-type-post_type_archive ubermenu-item-object-act_kb ubermenu-item-1091 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-1" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/act_kb/"><span class="ubermenu-target-title ubermenu-target-text">Knowledge Base</span></a></li><li id="menu-item-1751" class="ubermenu-item ubermenu-item-type-post_type_archive ubermenu-item-object-act_downloads ubermenu-item-1751 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-1" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/act_downloads/"><span class="ubermenu-target-title ubermenu-target-text">Downloads</span></a></li><li id="menu-item-473" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-473 ubermenu-item-auto ubermenu-item-normal ubermenu-item-level-1" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/support/customer-portal/"><span class="ubermenu-target-title ubermenu-target-text">Customer Portal</span></a></li><li class="ubermenu-retractor ubermenu-retractor-mobile"><i class="fa fa-times"></i> Close</li></ul></li><li id="menu-item-69" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-has-children ubermenu-item-69 ubermenu-item-level-0 ubermenu-column ubermenu-column-auto ubermenu-has-submenu-drop ubermenu-has-submenu-mega" ><span class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" tabindex="0"><span class="ubermenu-target-title ubermenu-target-text">Industries</span></span><ul class="ubermenu-submenu ubermenu-submenu-id-69 ubermenu-submenu-type-mega ubermenu-submenu-drop ubermenu-submenu-align-full_width ubermenu-autoclear ubermenu-submenu-grid" ><li id="menu-item-501" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-501 ubermenu-item-auto ubermenu-item-header ubermenu-item-level-1 ubermenu-column ubermenu-column-1-4" ><a class="ubermenu-target ubermenu-target-with-image ubermenu-item-layout-image_above" href="http://www.advancedclustering.com/industries/hpc-in-education/"><img class="ubermenu-image ubermenu-image-size-medium" src="http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_edu-1024x679-300x199.jpg" srcset="http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_edu-1024x679-300x199.jpg 300w, http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_edu-1024x679-768x509.jpg 768w, http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_edu-1024x679.jpg 1024w" sizes="(max-width: 300px) 100vw, 300px" width="50" height="50" alt="industry_edu-1024&#215;679"  /><span class="ubermenu-target-title ubermenu-target-text">Education</span></a></li><li id="menu-item-496" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-496 ubermenu-item-auto ubermenu-item-header ubermenu-item-level-1 ubermenu-column ubermenu-column-1-4" ><a class="ubermenu-target ubermenu-target-with-image ubermenu-item-layout-image_above" href="http://www.advancedclustering.com/industries/climate/"><img class="ubermenu-image ubermenu-image-size-medium" src="http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_weather-1024x766-300x224.jpg" srcset="http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_weather-1024x766-300x224.jpg 300w, http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_weather-1024x766-768x575.jpg 768w, http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_weather-1024x766.jpg 1024w" sizes="(max-width: 300px) 100vw, 300px" width="50" height="50" alt="industry_weather-1024&#215;766"  /><span class="ubermenu-target-title ubermenu-target-text">Climate</span></a></li><li id="menu-item-495" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-495 ubermenu-item-auto ubermenu-item-header ubermenu-item-level-1 ubermenu-column ubermenu-column-1-4" ><a class="ubermenu-target ubermenu-target-with-image ubermenu-item-layout-image_above" href="http://www.advancedclustering.com/industries/energy/"><img class="ubermenu-image ubermenu-image-size-medium" src="http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_energy-1024x682-300x200.jpg" srcset="http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_energy-1024x682-300x200.jpg 300w, http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_energy-1024x682-768x512.jpg 768w, http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_energy-1024x682.jpg 1024w" sizes="(max-width: 300px) 100vw, 300px" width="50" height="50" alt="industry_energy-1024&#215;682"  /><span class="ubermenu-target-title ubermenu-target-text">Energy</span></a></li><li id="menu-item-499" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-499 ubermenu-item-auto ubermenu-item-header ubermenu-item-level-1 ubermenu-column ubermenu-column-1-4" ><a class="ubermenu-target ubermenu-target-with-image ubermenu-item-layout-image_above" href="http://www.advancedclustering.com/industries/engineering/"><img class="ubermenu-image ubermenu-image-size-medium" src="http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_engineering-1024x682-300x200.jpg" srcset="http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_engineering-1024x682-300x200.jpg 300w, http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_engineering-1024x682-768x512.jpg 768w, http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_engineering-1024x682.jpg 1024w" sizes="(max-width: 300px) 100vw, 300px" width="300" height="200" alt="industry_engineering-1024&#215;682"  /><span class="ubermenu-target-title ubermenu-target-text">Engineering</span></a></li><li id="menu-item-497" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-497 ubermenu-item-auto ubermenu-item-header ubermenu-item-level-1 ubermenu-column ubermenu-column-1-4" ><a class="ubermenu-target ubermenu-target-with-image ubermenu-item-layout-image_above" href="http://www.advancedclustering.com/industries/finance/"><img class="ubermenu-image ubermenu-image-size-medium" src="http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_finance-1024x768-300x225.jpg" srcset="http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_finance-1024x768-300x225.jpg 300w, http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_finance-1024x768-768x576.jpg 768w, http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_finance-1024x768.jpg 1024w" sizes="(max-width: 300px) 100vw, 300px" width="50" height="50" alt="industry_finance-1024&#215;768"  /><span class="ubermenu-target-title ubermenu-target-text">Finance</span></a></li><li id="menu-item-500" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-500 ubermenu-item-auto ubermenu-item-header ubermenu-item-level-1 ubermenu-column ubermenu-column-1-4" ><a class="ubermenu-target ubermenu-target-with-image ubermenu-item-layout-image_above" href="http://www.advancedclustering.com/industries/government/"><img class="ubermenu-image ubermenu-image-size-medium" src="http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_govt-1024x682-300x200.jpg" srcset="http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_govt-1024x682-300x200.jpg 300w, http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_govt-1024x682-768x512.jpg 768w, http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_govt-1024x682.jpg 1024w" sizes="(max-width: 300px) 100vw, 300px" width="300" height="200" alt="industry_govt-1024&#215;682"  /><span class="ubermenu-target-title ubermenu-target-text">Government</span></a></li><li id="menu-item-498" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-498 ubermenu-item-auto ubermenu-item-header ubermenu-item-level-1 ubermenu-column ubermenu-column-1-4" ><a class="ubermenu-target ubermenu-target-with-image ubermenu-item-layout-image_above" href="http://www.advancedclustering.com/industries/life-sciences/"><img class="ubermenu-image ubermenu-image-size-medium" src="http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_lifesciences-1024x673-300x197.jpg" srcset="http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_lifesciences-1024x673-300x197.jpg 300w, http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_lifesciences-1024x673-768x505.jpg 768w, http://www.advancedclustering.com/wp-content/uploads/2017/01/industry_lifesciences-1024x673.jpg 1024w" sizes="(max-width: 300px) 100vw, 300px" width="300" height="197" alt="industry_lifesciences-1024&#215;673"  /><span class="ubermenu-target-title ubermenu-target-text">Life Sciences</span></a></li><li id="menu-item-494" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-494 ubermenu-item-auto ubermenu-item-header ubermenu-item-level-1 ubermenu-column ubermenu-column-1-4" ><a class="ubermenu-target ubermenu-target-with-image ubermenu-item-layout-image_above" href="http://www.advancedclustering.com/industries/manufacturing/"><img class="ubermenu-image ubermenu-image-size-medium" src="http://www.advancedclustering.com/wp-content/uploads/2017/02/hpc-manufacturing-300x200.png" width="300" height="200" alt="HPC for manufacturing"  /><span class="ubermenu-target-title ubermenu-target-text">Manufacturing</span></a></li><li id="menu-item-2904" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-item-2904 ubermenu-item-auto ubermenu-item-header ubermenu-item-level-1 ubermenu-column ubermenu-column-1-4" ><a class="ubermenu-target ubermenu-target-with-image ubermenu-item-layout-image_above" href="http://www.advancedclustering.com/industries/cfd-aerospace-engineering/"><img class="ubermenu-image ubermenu-image-size-thumbnail" src="http://www.advancedclustering.com/wp-content/uploads/2018/02/cfd-1.jpg" width="150" height="150" alt="Fluid dynamics / mechanics simulation CGI imagery on white background"  /><span class="ubermenu-target-title ubermenu-target-text">CFD for Aerospace</span></a></li><li class="ubermenu-retractor ubermenu-retractor-mobile"><i class="fa fa-times"></i> Close</li></ul></li><li id="menu-item-286" class="ubermenu-item ubermenu-item-type-post_type ubermenu-item-object-page ubermenu-current_page_parent ubermenu-item-286 ubermenu-item-level-0 ubermenu-column ubermenu-column-auto" ><a class="ubermenu-target ubermenu-item-layout-default ubermenu-item-layout-text_only" href="http://www.advancedclustering.com/blog/" tabindex="0"><span class="ubermenu-target-title ubermenu-target-text">Blog</span></a></li></ul></nav>
+<!-- End UberMenu -->
+	    </nav>
+	</div>
+	<form method="get" action="/">
+	  <input name="s" class="srch" type="search"/>
+	</form>
+      </div>
+    </div>
+  </header>
+
+
+<div class="banner inner-bnr blog-list ">   
+	<div class="wrap">
+		<div class="banner-content">
+			<div class="bnr-cnt-tp">
+				<h2>Knowledge base</h2>
+			</div>
+			<div class="bnr-para">
+			</div>
+		</div>
+		<!--<div class="banner-img"><img src="images/banner-product1.png" alt="banner"/></div>-->
+	</div>
+</div>
+   <div id="main" class="site-main inner product-listing-page blog-details">
+	<div class="clstr-built-top">
+	    <div class="wrap">
+		<div class='kb-buttons' style='margin-bottom: 3em'>
+			<h2 style='margin-top: 0em; padding-top: 0em'>Expand your knowledge of hardware, software and supercomputing</h2>
+			<div>
+			<a class='quote-cart-btn' href='/act_systems/'>Browse Product Catalog</a><a class='quote-cart-btn' href='/act_downloads/'>Get our Downloads</a><a class='quote-cart-btn' href='/subscribe-knowledge-base-alerts/'>Subscribe to KB alerts</a><a class='quote-cart-btn' href='/submit-question-knowledge-base/'>Submit a question to KB</a>			</div>
+		</div>
+
+	    <div class="blog-hold clear">
+	    <div class="blog-left">
+	      <div class="blog-top">
+
+	
+
+		      <h2 class="inr-hd">Installing NVIDIA Drivers on RHEL or CentOS 7</h2>
+	      <p>Most users of NVIDIA graphics cards prefer to use the drivers provided by NVIDIA. These more fully support the capabilities of the card when compared to the nouveau driver that is included with the distribution. These are the steps to install the NVIDIA driver and disable the nouveau driver.</p>
+<p><strong>Prepare your machine</strong><br />
+<code><br />
+yum -y update<br />
+yum -y groupinstall "GNOME Desktop" "Development Tools"<br />
+yum -y install kernel-devel<br />
+</code></p>
+<p>Download the latest NVIDIA driver for unix.<br />
+==<strong>&gt;</strong> http://www.nvidia.com/object/unix.html ==<strong>&gt;</strong> Latest Long Lived Branch version<br />
+<em>Note: If using a recently released, top end GTX or Tesla you may get more support with the Latest Short Lived Branch instead.</em></p>
+<p>In order to have the NVIDIA drivers rebuilt automatically with future kernel updates you can also install the EPEL repository and the DKMS package. This is optional.<br />
+<code><br />
+yum -y install epel-release<br />
+yum -y install dkms<br />
+</code></p>
+<p><strong>Reboot your machine to make sure you are running the newest kernel</strong></p>
+<p>Edit <code>/etc/default/grub</code>. Append the following  to &#8220;<code>GRUB_CMDLINE_LINUX</code>&#8221;<br />
+<code>rd.driver.blacklist=nouveau nouveau.modeset=0</code></p>
+<p>Generate a new grub configuration to include the above changes.<br />
+<code>grub2-mkconfig -o /boot/grub2/grub.cfg</code></p>
+<p>Edit/create <code>/etc/modprobe.d/blacklist.conf</code> and append:<br />
+<code>blacklist nouveau</code></p>
+<p>Backup your old initramfs and then build a new one<br />
+<code>mv /boot/initramfs-$(uname -r).img /boot/initramfs-$(uname -r)-nouveau.img</code><br />
+<code>dracut /boot/initramfs-$(uname -r).img $(uname -r)</code></p>
+<p><strong>Reboot your machine</strong></p>
+<p><em>If your machine doesn&#8217;t boot to a login prompt disconnect your monitor from the graphics card and plug directly into the onboard VGA port. Alternatively SSH directly into the machine.</em></p>
+<p>The NVIDIA installer will not run while X is running so switch to text mode:<br />
+<code>systemctl isolate multi-user.target</code></p>
+<p>Run the NVIDIA driver installer and enter yes to all options.<br />
+<code>sh NVIDIA-Linux-x86_64-*.run</code></p>
+<p><strong>Reboot your machine</strong></p>
+<h2>Optionally install NVIDIA&#8217;s CUDA Toolkit</h2>
+<p>Download the latest CUDA Toolkit (runfile installer option, not the rpm download)<br />
+==&gt; https://developer.nvidia.com/cuda-downloads ==&gt; Linux ==&gt; x86_64 ==&gt; RHEL/CentOS ==&gt; 7 ==&gt; runfile (local)</p>
+<p><strong>Run the CUDA installer.</strong><br />
+<code>sh cuda_*.run</code><br />
+Say no to installing the NVIDIA driver. The standalone driver you already installed is typically newer than what is packaged with CUDA. Use the default option for all other choices.</p>
+<p><strong>To add CUDA to your environment add the following files.</strong></p>
+<p><b>Create <code>/etc/profile.d/cuda.sh</code></b><br />
+<code class="bash plain">PATH=$PATH:</code><code class="bash plain">/usr/local/cuda/bin</code><br />
+<code class="bash functions">export</code> <code class="bash plain">PATH</code></p>
+<p><b>Create <code>/etc/profile.d/cuda.csh</code></b><br />
+<code>set path = ( $path /usr/local/cuda/bin )</code></p>
+<p><b>Create <code>/etc/ld.so.conf.d/cuda.conf</code></b><br />
+<code>/usr/local/cuda/lib64</code></p>
+		    </div>
+	   </div>
+	
+	<div class="blog-right">
+	<div class="blog-right-hold">
+		<h4>Categories</h4>
+		<ul>
+			<li class="cat-item cat-item-45"><a href="http://www.advancedclustering.com/act_kb_cat/getting-support/" >Getting Support</a> (4)
+</li>
+	<li class="cat-item cat-item-46"><a href="http://www.advancedclustering.com/act_kb_cat/hardware/" >Hardware</a> (34)
+<ul class='children'>
+	<li class="cat-item cat-item-47"><a href="http://www.advancedclustering.com/act_kb_cat/areca-raid-arrays/" >Areca Raid Arrays</a> (3)
+</li>
+	<li class="cat-item cat-item-48"><a href="http://www.advancedclustering.com/act_kb_cat/infiniband/" >InfiniBand</a> (9)
+</li>
+	<li class="cat-item cat-item-69"><a href="http://www.advancedclustering.com/act_kb_cat/lsi-raid-arrays/" >LSI Raid Arrays</a> (9)
+</li>
+	<li class="cat-item cat-item-68"><a href="http://www.advancedclustering.com/act_kb_cat/nvidia-graphics-cards/" >NVIDIA Graphics Cards</a> (1)
+</li>
+	<li class="cat-item cat-item-49"><a href="http://www.advancedclustering.com/act_kb_cat/racks/" >Racks</a> (1)
+</li>
+	<li class="cat-item cat-item-50"><a href="http://www.advancedclustering.com/act_kb_cat/troubleshooting/" >Troubleshooting</a> (8)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-51"><a href="http://www.advancedclustering.com/act_kb_cat/software/" >Software</a> (11)
+<ul class='children'>
+	<li class="cat-item cat-item-52"><a href="http://www.advancedclustering.com/act_kb_cat/act-utilities/" >ACT Utilities</a> (5)
+</li>
+	<li class="cat-item cat-item-53"><a href="http://www.advancedclustering.com/act_kb_cat/hpc-apps-benchmarks/" >HPC apps &amp; benchmarks</a> (1)
+</li>
+	<li class="cat-item cat-item-54"><a href="http://www.advancedclustering.com/act_kb_cat/linux/" >Linux</a> (3)
+</li>
+	<li class="cat-item cat-item-55"><a href="http://www.advancedclustering.com/act_kb_cat/schedulers/" >Schedulers</a> (3)
+	<ul class='children'>
+	<li class="cat-item cat-item-80"><a href="http://www.advancedclustering.com/act_kb_cat/sge-grid-engine/" >SGE / Grid Engine</a> (1)
+</li>
+	<li class="cat-item cat-item-56"><a href="http://www.advancedclustering.com/act_kb_cat/torque/" >TORQUE</a> (1)
+</li>
+	</ul>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://www.advancedclustering.com/act_kb_cat/tech-tips/" >Tech Tips</a> (15)
+</li>
+		</ul>
+	</div>
+	<div class="blog-right-hold">
+		<h4>Recent KB articles</h4>
+		<ul>
+				<li><a href="http://www.advancedclustering.com/act_kb/updating-firmware-act-intel-system/">Updating firmware on your ACT Intel system</a></li>
+		<li><a href="http://www.advancedclustering.com/act_kb/finding-the-serial-number-of-your-act-system/">Finding the serial number of your ACT system</a></li>
+		<li><a href="http://www.advancedclustering.com/act_kb/check-status-lsi-raid-card-battery-backup-unit/">Check the status of an LSI raid card battery backup unit</a></li>
+		<li><a href="http://www.advancedclustering.com/act_kb/setup-act-breakin-hardware-diagnostics-tool-grub-boot-option/">Setup ACT Breakin hardware diagnostics tool as a grub boot option</a></li>
+		<li><a href="http://www.advancedclustering.com/act_kb/server-doesnt-post-determining-if-an-dimm-cpu-or-motherboard-is-faulty/">Server doesn’t POST – Determining if an DIMM, CPU, or MotherBoard is faulty</a></li>
+		</ul>
+	</div>
+</div>
+	</div>
+    </div>
+   
+<div class="clstr-built-bottom clear">
+<div class="wrap clear">
+	    	<div class="clstr-built-bottom-lft">
+      		<span>Use our Breakin stress test and diagnostics tool to pinpoint hardware issues and component failures.</span>
+      		<div><a class="cl-rd" href="http://www.advancedclustering.com/products/software/breakin/">Get Breakin</a></div>
+    	</div>
+
+	    	<div class="clstr-built-bottom-rgt">
+      		<span>Check out our product catalog and use our Configurator to plan your next system and get a price estimate.</span>
+      		<div><a class="cl-bl" href="http://www.advancedclustering.com/act_systems/">Go to the Product Catalog to Use the Configurator</a></div>
+    	</div>
+
+</div>
+</div>
+	
+
+  
+  </div> <!-- end of main -->
+
+<div class="free-cntct-section clear">
+      <div class="wrap clear">
+	<div class="request-left">
+	  <h4>Request a Consultation from our team of HPC Experts</h4>
+	  <p><p>Would you like to speak to one of our HPC experts? We are here to help you. Submit your details, and we'll be in touch shortly.  </p>
+</p>
+	</div>
+	<div class="request-right">
+		<div class='frm-sec clear'>
+	   
+                <div class='gf_browser_unknown gform_wrapper' id='gform_wrapper_23' ><a id='gf_23' class='gform_anchor' ></a><form method='post' enctype='multipart/form-data' target='gform_ajax_frame_23' id='gform_23'  action='/act_kb/installing-nvidia-drivers-rhel-centos-7/#gf_23'>
+                        <div class='gform_body'><ul id='gform_fields_23' class='gform_fields left_label form_sublabel_below description_below'><li id='field_23_1' class='gfield gfield_contains_required field_sublabel_below field_description_below gfield_visibility_visible' ><label class='gfield_label gfield_label_before_complex' for='input_23_1_3' >Name<span class='gfield_required'>*</span></label><div class='ginput_complex ginput_container no_prefix has_first_name no_middle_name has_last_name no_suffix gf_name_has_2 ginput_container_name gfield_trigger_change' id='input_23_1'>
+                            
+                            <span id='input_23_1_3_container' class='name_first' >
+                                                    <input type='text' name='input_1.3' id='input_23_1_3' value='' aria-label='First name' tabindex='2'  aria-required="true" aria-invalid="false" />
+                                                    <label for='input_23_1_3' >First</label>
+                                                </span>
+                            
+                            <span id='input_23_1_6_container' class='name_last' >
+                                                    <input type='text' name='input_1.6' id='input_23_1_6' value='' aria-label='Last name' tabindex='4'  aria-required="true" aria-invalid="false" />
+                                                    <label for='input_23_1_6' >Last</label>
+                                                </span>
+                            
+                        </div></li><li id='field_23_2' class='gfield gfield_contains_required field_sublabel_below field_description_below gfield_visibility_visible' ><label class='gfield_label' for='input_23_2' >Email address<span class='gfield_required'>*</span></label><div class='ginput_container ginput_container_email'>
+                            <input name='input_2' id='input_23_2' type='email' value='' class='large' tabindex='6'    aria-required="true" aria-invalid="false"/>
+                        </div></li><li id='field_23_3' class='gfield field_sublabel_below field_description_below gfield_visibility_visible' ><label class='gfield_label' for='input_23_3' >Phone</label><div class='ginput_container ginput_container_phone'><input name='input_3' id='input_23_3' type='tel' value='' class='large' tabindex='7'    aria-invalid="false" /></div></li><li id='field_23_4' class='gfield gfield_contains_required field_sublabel_below field_description_below gfield_visibility_visible' ><label class='gfield_label' for='input_23_4' >Message<span class='gfield_required'>*</span></label><div class='ginput_container ginput_container_textarea'><textarea name='input_4' id='input_23_4' class='textarea small' tabindex='8'   aria-required="true" aria-invalid="false"   rows='10' cols='50'></textarea></div></li><li id='field_23_5' class='gfield gform_validation_container field_sublabel_below field_description_below gfield_visibility_' ><label class='gfield_label' for='input_23_5' >Phone</label><div class='ginput_container'><input name='input_5' id='input_23_5' type='text' value='' autocomplete='off'/></div><div class='gfield_description'>This field is for validation purposes and should be left unchanged.</div></li>
+                            </ul></div>
+        <div class='gform_footer left_label'> <input type='submit' id='gform_submit_button_23' class='gform_button button' value='Submit Now' tabindex='9' onclick='if(window["gf_submitting_23"]){return false;}  if( !jQuery("#gform_23")[0].checkValidity || jQuery("#gform_23")[0].checkValidity()){window["gf_submitting_23"]=true;}  ' onkeypress='if( event.keyCode == 13 ){ if(window["gf_submitting_23"]){return false;} if( !jQuery("#gform_23")[0].checkValidity || jQuery("#gform_23")[0].checkValidity()){window["gf_submitting_23"]=true;}  jQuery("#gform_23").trigger("submit",[true]); }' /> <input type='hidden' name='gform_ajax' value='form_id=23&amp;title=&amp;description=&amp;tabindex=1' />
+            <input type='hidden' class='gform_hidden' name='is_submit_23' value='1' />
+            <input type='hidden' class='gform_hidden' name='gform_submit' value='23' />
+            
+            <input type='hidden' class='gform_hidden' name='gform_unique_id' value='' />
+            <input type='hidden' class='gform_hidden' name='state_23' value='WyJbXSIsIjA2NDM2Y2NkMTEwMzNhZjJmMTA0ZDA3MTI1NThhNGQ5Il0=' />
+            <input type='hidden' class='gform_hidden' name='gform_target_page_number_23' id='gform_target_page_number_23' value='0' />
+            <input type='hidden' class='gform_hidden' name='gform_source_page_number_23' id='gform_source_page_number_23' value='1' />
+            <input type='hidden' name='gform_field_values' value='' />
+            
+        </div>
+                        </form>
+                        </div>
+                <iframe style='display:none;width:0px;height:0px;' src='about:blank' name='gform_ajax_frame_23' id='gform_ajax_frame_23' title='Ajax Frame'>This iframe contains the logic required to handle Ajax powered Gravity Forms.</iframe>
+                <script type='text/javascript'>jQuery(document).ready(function($){gformInitSpinner( 23, 'http://www.advancedclustering.com/wp-content/plugins/gravityforms/images/spinner.gif' );jQuery('#gform_ajax_frame_23').load( function(){var contents = jQuery(this).contents().find('*').html();var is_postback = contents.indexOf('GF_AJAX_POSTBACK') >= 0;if(!is_postback){return;}var form_content = jQuery(this).contents().find('#gform_wrapper_23');var is_confirmation = jQuery(this).contents().find('#gform_confirmation_wrapper_23').length > 0;var is_redirect = contents.indexOf('gformRedirect(){') >= 0;var is_form = form_content.length > 0 && ! is_redirect && ! is_confirmation;if(is_form){jQuery('#gform_wrapper_23').html(form_content.html());if(form_content.hasClass('gform_validation_error')){jQuery('#gform_wrapper_23').addClass('gform_validation_error');} else {jQuery('#gform_wrapper_23').removeClass('gform_validation_error');}setTimeout( function() { /* delay the scroll by 50 milliseconds to fix a bug in chrome */ jQuery(document).scrollTop(jQuery('#gform_wrapper_23').offset().top); }, 50 );if(window['gformInitDatepicker']) {gformInitDatepicker();}if(window['gformInitPriceFields']) {gformInitPriceFields();}var current_page = jQuery('#gform_source_page_number_23').val();gformInitSpinner( 23, 'http://www.advancedclustering.com/wp-content/plugins/gravityforms/images/spinner.gif' );jQuery(document).trigger('gform_page_loaded', [23, current_page]);window['gf_submitting_23'] = false;}else if(!is_redirect){var confirmation_content = jQuery(this).contents().find('.GF_AJAX_POSTBACK').html();if(!confirmation_content){confirmation_content = contents;}setTimeout(function(){jQuery('#gform_wrapper_23').replaceWith(confirmation_content);jQuery(document).scrollTop(jQuery('#gf_23').offset().top);jQuery(document).trigger('gform_confirmation_loaded', [23]);window['gf_submitting_23'] = false;}, 50);}else{jQuery('#gform_23').append(contents);if(window['gformRedirect']) {gformRedirect();}}jQuery(document).trigger('gform_post_render', [23, current_page]);} );} );</script><script type='text/javascript'> if(typeof gf_global == 'undefined') var gf_global = {"gf_currency_config":{"name":"U.S. Dollar","symbol_left":"$","symbol_right":"","symbol_padding":"","thousand_separator":",","decimal_separator":".","decimals":2},"base_url":"http:\/\/www.advancedclustering.com\/wp-content\/plugins\/gravityforms","number_formats":[],"spinnerUrl":"http:\/\/www.advancedclustering.com\/wp-content\/plugins\/gravityforms\/images\/spinner.gif"};jQuery(document).bind('gform_post_render', function(event, formId, currentPage){if(formId == 23) {} } );jQuery(document).bind('gform_post_conditional_logic', function(event, formId, fields, isInit){} );</script><script type='text/javascript'> jQuery(document).ready(function(){jQuery(document).trigger('gform_post_render', [23, 1]) } ); </script>		</div>
+	  <!-- <form>
+	    <div class="frm-sec clear">
+	      <div class="frm-sec-left"><input type="text" placeholder="-- First Name --"></div>
+	      <div class="frm-sec-right"><input type="email" placeholder="-- E-mail Address --"></div>
+	    </div>
+	    <div class="frm-sec">
+	      <textarea placeholder="-- Your Message Goes Here --"></textarea>
+	    </div>
+	    <div class="frm-sec">
+	      <input type="submit" value="Submit Now">
+	    </div>
+	  </form> -->
+	</div>
+      </div>
+    </div>
+  <footer id="footer" class="site-footer">
+    <div class="footer-top clear" style='border: 1px solid black';>
+      <div class="wrap clear">
+	<div class="ftr-top-sec">
+	  <h5>Latest News</h5>
+	  <ul>
+	    		<li><a href="http://www.advancedclustering.com/new-knowledge-base-article-explains-updating-firmware-act-intel-system/">New Knowledge Base Article Explains Updating Firmware on ACT Intel System</a></li>
+		<li><a href="http://www.advancedclustering.com/attending-thermal-fluids-engineering-conference/">Attending the Thermal & Fluids Engineering Conference</a></li>
+		<li><a href="http://www.advancedclustering.com/new-hpc-cluster-deployed-wright-state-university/">New HPC Cluster Deployed at Wright State University</a></li>
+		<li><a href="http://www.advancedclustering.com/2948-2/">Introducing ACTserv e1110</a></li>
+		<li><a href="http://www.advancedclustering.com/act-attending-astfe-2018-next-month-florida/">ACT Attending ASTFE 2018 Next Month in Florida</a></li>
+	  </ul>
+	</div>
+	<div class="ftr-top-sec">
+	  <h5>Useful Links</h5>
+		<div class="menu-useful-links-container"><ul id="menu-useful-links" class="menu"><li id="menu-item-882" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-882"><a href="http://www.advancedclustering.com/company-overview/contact-us/">Contact Us</a></li>
+<li id="menu-item-883" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-883"><a href="http://www.advancedclustering.com/support/">Support</a></li>
+<li id="menu-item-884" class="menu-item menu-item-type-post_type_archive menu-item-object-act_systems menu-item-884"><a href="http://www.advancedclustering.com/act_systems/">All systems</a></li>
+<li id="menu-item-886" class="menu-item menu-item-type-post_type_archive menu-item-object-act_success_stories menu-item-886"><a href="http://www.advancedclustering.com/act_success_stories/">Success Stories</a></li>
+<li id="menu-item-1519" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1519"><a href="http://eepurl.com/Bj3Zr">Join Our Newsletter</a></li>
+</ul></div>	  <ul class="social">
+	    <li><a href="https://twitter.com/ACT_CLUSTER" target="_blank"><img src="http://www.advancedclustering.com/wp-content/themes/act/images/twtr.png"/></a></li>
+	    <li><a href="https://www.facebook.com/AdvancedClustering/" target="_blank"><img src="http://www.advancedclustering.com/wp-content/themes/act/images/fb.png"/></a></li>
+	    <li><a href="https://plus.google.com/+Advancedclustering" target="_blank"><img src="http://www.advancedclustering.com/wp-content/themes/act/images/ggl.png"/></a></li>
+	    <li><a href="https://www.facebook.com/AdvancedClustering/" target="_blank"><img src="http://www.advancedclustering.com/wp-content/themes/act/images/ins.png"/></a></li>
+	  </ul>
+	</div>
+	<div class="ftr-top-sec">
+	  <h5>Company</h5>
+	  <a class="msg" href="mailto:info@advancedclustering.com">info@advancedclustering.com</a>
+	  <a class="ph" href="callto:913-643-0300">913-643-0300</a>
+	  <a class="cht" href="callto:913-643-0299">913-643-0299</a>
+	  <address>3148 Roanoke Rd, Kansas City, MO 64111</address>
+	</div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom clear">
+      <div class="wrap clear">
+	<div class="ftr-btm-lft">
+	  <p>&copy; 2018 Advanced Clustering Technologies, Inc. All rights reserved.</p>
+	</div>
+	<div class="ftr-btm-rgt">
+	   <a href="http://www.advancedclustering.com/terms-use/">Terms of Service</a>
+	   <a href="http://www.advancedclustering.com/privacy-policy/">Privacy Policy</a>
+	</div>
+      </div>
+    </div>
+  </footer>
+</div>
+<link rel='stylesheet' id='gforms_reset_css-css'  href='http://www.advancedclustering.com/wp-content/plugins/gravityforms/css/formreset.min.css?ver=2.2.5' type='text/css' media='all' />
+<link rel='stylesheet' id='gforms_formsmain_css-css'  href='http://www.advancedclustering.com/wp-content/plugins/gravityforms/css/formsmain.min.css?ver=2.2.5' type='text/css' media='all' />
+<link rel='stylesheet' id='gforms_ready_class_css-css'  href='http://www.advancedclustering.com/wp-content/plugins/gravityforms/css/readyclass.min.css?ver=2.2.5' type='text/css' media='all' />
+<link rel='stylesheet' id='gforms_browsers_css-css'  href='http://www.advancedclustering.com/wp-content/plugins/gravityforms/css/browsers.min.css?ver=2.2.5' type='text/css' media='all' />
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/plugins/addon-elements-for-elementor-page-builder/assets/js/animated-main.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/themes/act/js/library.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/themes/act/js/functions.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/themes/act/js/common.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/themes/act/js/jquery.bxslider.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/themes/act/js/owl.carousel.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/themes/act/js/responsiveTabs.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/themes/act/js/jquery.sticky.js?ver=1.0'></script>
+<script type='text/javascript' src='//maps.googleapis.com/maps/api/js'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var ubermenu_data = {"remove_conflicts":"on","reposition_on_load":"off","intent_delay":"300","intent_interval":"100","intent_threshold":"7","scrollto_offset":"50","scrollto_duration":"1000","responsive_breakpoint":"959","accessible":"on","retractor_display_strategy":"responsive","touch_off_close":"on","collapse_after_scroll":"on","v":"3.2.5","configurations":["main"],"ajax_url":"http:\/\/www.advancedclustering.com\/wp-admin\/admin-ajax.php","plugin_url":"http:\/\/www.advancedclustering.com\/wp-content\/plugins\/ubermenu\/"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/plugins/ubermenu/assets/js/ubermenu.min.js?ver=3.2.5'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-includes/js/wp-embed.min.js?ver=4.8.5'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/plugins/gravityforms/js/jquery.json.min.js?ver=2.2.5'></script>
+<script type='text/javascript' src='http://www.advancedclustering.com/wp-content/plugins/gravityforms/js/gravityforms.min.js?ver=2.2.5'></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-876921-9', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<script type="text/javascript">
+    window._chatlio = window._chatlio||[];
+    !function(){ var t=document.getElementById("chatlio-widget-embed");if(t&&window.ChatlioReact&&_chatlio.init)return void _chatlio.init(t,ChatlioReact);for(var e=function(t){return function(){_chatlio.push([t].concat(arguments)) }},i=["configure","identify","track","show","hide","isShown","isOnline"],a=0;a<i.length;a++)_chatlio[i[a]]||(_chatlio[i[a]]=e(i[a]));var n=document.createElement("script"),c=document.getElementsByTagName("script")[0];n.id="chatlio-widget-embed",n.src="https://w.chatlio.com/w.chatlio-widget.js",n.async=!0,n.setAttribute("data-embed-version","2.1");
+       n.setAttribute('data-widget-id','6bc54b40-0bc0-4307-4f4f-3fdb2375fd28');
+       c.parentNode.insertBefore(n,c);
+    }();
+</script>
+
+
+<script type="text/javascript">
+adroll_adv_id = "42THJHY3URBGBB56NURMLC";
+adroll_pix_id = "ACS2HSZPMRFIZEKKN2ALAW";
+/* OPTIONAL: provide email to improve user identification */
+/* adroll_email = "username@example.com"; */
+(function () {
+var _onload = function(){
+if (document.readyState && !/loaded|complete/.test(document.readyState)){setTimeout(_onload, 10);return}
+if (!window.__adroll_loaded){__adroll_loaded=true;setTimeout(_onload, 50);return}
+var scr = document.createElement("script");
+var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+scr.setAttribute('async', 'true');
+scr.type = "text/javascript";
+scr.src = host + "/j/roundtrip.js";
+((document.getElementsByTagName('head') || [null])[0] ||
+document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+};
+if (window.addEventListener) {window.addEventListener('load', _onload, false);}
+else {window.attachEvent('onload', _onload)}
+}());
+</script>
+
+
+</body>
+</html>
